@@ -10,6 +10,7 @@ const user = [
     number: '+9234234324',
     gender: 'Male',
     expireDate: '2/2/2024',
+    type: 'admin',
     pin: bcrypt.hashSync('1234', 10),
   },
   {
@@ -19,6 +20,7 @@ const user = [
     birthday: '12/4/2000',
     number: '+9231232231',
     city: 'Lahore',
+    type: 'admin',
     gender: 'Male',
     expireDate: '2/2/2024',
     pin: bcrypt.hashSync('1234', 10),
