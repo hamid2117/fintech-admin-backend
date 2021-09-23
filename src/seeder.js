@@ -1,6 +1,10 @@
 import users from './data/UserData.js'
+import cashRegiser from './data/CashData.js'
+import agencydata from './data/AgencyData.js'
 // Models
 import User from './models/userModel.js'
+import Agency from './models/agency.js'
+import Cash from './models/cashRegisterModel.js'
 // other
 import dotenv from 'dotenv'
 import connectDB from './config/db.js'
@@ -12,10 +16,21 @@ connectDB()
 const importData = async () => {
   try {
     await User.deleteMany()
+    await Cash.deleteMany()
+    await Agency.deleteMany()
 
     const createdUsers = await User.insertMany(users)
-
+    const createdAgency = await Agency.insertMany(agencydata)
+    const adminUser = createdUsers[0]._id
+    const byAgency = createdAgency[0]._id
+    const sampleCash = cashRegiser.map((product) => {
+      return { ...product, user: adminUser, agency: byAgency }
+    })
+    const createdCash = await Cash.insertMany(sampleCash)
+    // const
     console.log(createdUsers)
+    console.log(createdCash)
+    console.log(createdAgency)
     console.log('data Inserted !')
     process.exit()
   } catch (error) {
