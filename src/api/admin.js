@@ -7,6 +7,8 @@ const router = express.Router()
 
 router.get(
   '/image/:path',
+  // protect,
+  // admin,
   asyncHandler(async (req, res) => {
     console.log(req.params.path)
     res.download('./uploads/' + req.params.path)
@@ -132,7 +134,6 @@ router.put(
       user.number = req.body.number || user.number
       user.city = req.body.city || user.city
       user.gender = req.body.gender || user.gender
-      user.type = req.body.type || user.type
 
       const updatedUser = await user.save()
       res.status(200).json(updatedUser)

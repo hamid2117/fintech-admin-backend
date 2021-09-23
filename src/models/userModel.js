@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import bcrypt from 'bcryptjs'
 
 const userSchema = mongoose.Schema(
   {
@@ -11,11 +12,24 @@ const userSchema = mongoose.Schema(
     gender: { type: String, required: true },
     pin: { type: String, required: true },
     img: { type: String },
+    cardImage: { type: String },
     expireDate: { type: String },
     type: { type: String, required: true, default: 'user' },
   },
   { timestamps: true }
 )
+
+userSchema.pre('save', async function (next) {
+  if (!this.isModified('pin')) {
+    next()
+  }
+  const salt = await bcrypt.genSalt(10)
+  this.pin = await bcrypt.hash(this.pin, salt)
+})
+
+userSchema.methods.matchpin = async function matchpin(data) {
+  return await bcrypt.compare(data, this.pin)
+}
 
 const User = mongoose.model('User', userSchema)
 
