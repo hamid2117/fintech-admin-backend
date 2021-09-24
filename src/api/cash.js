@@ -107,8 +107,8 @@ router.put(
   asyncHandler(async (req, res) => {
     const cash = await Cash.findById(req.params.id)
     if (cash) {
-      cash.label = req.body.label || cash.label
-      cash.status = req.body.status || cash.status
+      cash.state = req.body.state
+      cash.status = req.body.status
       const updatedcash = await cash.save()
       res.status(200).json(updatedcash)
     } else {

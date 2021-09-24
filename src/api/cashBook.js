@@ -1,7 +1,7 @@
 import express from 'express'
+import Cash from '../models/cashBook.js'
 import { protect, admin } from '../auth/authMiddleware.js'
 import asyncHandler from 'express-async-handler'
-import Agency from '../models/agency.js'
 const router = express.Router()
 
 //*@desc fetch all Users
@@ -9,12 +9,11 @@ const router = express.Router()
 //*@Access Admin
 
 router.get(
-  '/agency',
+  '/cashbook',
   protect,
   admin,
   asyncHandler(async (req, res) => {
-    const cash = await Agency.find({})
-
+    const cash = await Cash.find({})
     if (cash) {
       res.status(201).json(cash)
     } else {
@@ -48,11 +47,11 @@ router.get(
 //*@Access Admin
 
 router.get(
-  '/agency/:id',
+  '/cashbook/:id',
   protect,
   admin,
   asyncHandler(async (req, res) => {
-    const cash = await Agency.findById(req.params.id)
+    const cash = await Cash.findById(req.params.id)
     if (cash) {
       res.json(cash)
     } else {
@@ -66,17 +65,19 @@ router.get(
 //*@Access Admin
 
 router.post(
-  '/agency',
+  '/cashbook',
+  protect,
   asyncHandler(async (req, res) => {
-    const { codee, label } = req.body
-    const cashi = await Agency.findOne({ codee })
+    const { type, account } = req.body
+    const cashi = await Cash.findOne({ account })
 
     if (cashi) {
       return res.status(400).json({ message: 'code is already exist . ' })
     }
-    const cash = new Agency({
-      codee,
-      label,
+    const cash = new Cash({
+      user: req.user.id,
+      type,
+      account,
     })
 
     const createdCash = await cash.save()
@@ -93,12 +94,13 @@ router.post(
 //*@Access Admin
 
 router.put(
-  '/editagency/:id',
+  '/editcashbook/:id',
   protect,
   asyncHandler(async (req, res) => {
-    const cash = await Agency.findById(req.params.id)
+    const cash = await Cash.findById(req.params.id)
     if (cash) {
-      cash.label = req.body.label || cash.label
+      cash.type = req.body.type || cash.type
+      cash.account = req.body.account || cash.account
       const updatedcash = await cash.save()
       res.status(200).json(updatedcash)
     } else {
