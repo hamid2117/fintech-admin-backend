@@ -10,6 +10,7 @@ const cashBookSchema = mongoose.Schema(
     user: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User' },
     type: { type: String, required: true, default: 'client' },
     account: { type: Number, required: true },
+    time: { type: String, required: true },
     balance: { type: Number, required: true, default: '0' },
   },
   { timestamps: true }

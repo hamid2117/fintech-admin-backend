@@ -68,7 +68,7 @@ router.post(
   '/cashbook',
   protect,
   asyncHandler(async (req, res) => {
-    const { type, account } = req.body
+    const { type, account, time } = req.body
     const cashi = await Cash.findOne({ account })
 
     if (cashi) {
@@ -77,6 +77,7 @@ router.post(
     const cash = new Cash({
       user: req.user.id,
       type,
+      time,
       account,
     })
 
