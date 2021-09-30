@@ -7,9 +7,10 @@ import cashApi from './cash.js'
 import agencyApi from './agency.js'
 import cashbookApi from './cashBook.js'
 import productApi from './product.js'
-
+import subcriptionApi from './subcription.js'
 const router = express.Router()
 
+router.use(subcriptionApi)
 router.use(cashbookApi)
 router.use(registerApi)
 router.use(loginApi)

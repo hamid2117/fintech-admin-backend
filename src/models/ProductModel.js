@@ -1,10 +1,3 @@
-//TODO : code :  3 digit
-//TODO :  label :  20 String
-//TODO :  durationEnum :MONTH / BIMONTHLY / QUARTER / SEMESTER / ANNUAL
-//TODO :  statusEnum :ENABLED / DISABLED  Boolean
-//TODO :  Association :product / scale  Boolean
-//TODO :  can view any product
-
 import mongoose from 'mongoose'
 
 const ProductSchema = mongoose.Schema(
