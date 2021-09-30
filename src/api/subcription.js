@@ -49,11 +49,7 @@ router.post(
   protect,
   asyncHandler(async (req, res) => {
     const { product } = req.body
-    const subcription = await Model.findOne({ codee })
 
-    if (subcription) {
-      return res.status(400).json({ message: 'code is already exist . ' })
-    }
     const cash = new Model({
       user: req.user.id,
       product: product,
