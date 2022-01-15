@@ -27,7 +27,7 @@ const protect = asyncHandler(async (req, res, next) => {
   }
 })
 const admin = asyncHandler(async (req, res, next) => {
-  if (req.user && req.user.type === 'admin') {
+  if (req.user && req.user.type === 'admin' || req.user && req.user.type === 'operator' ) {
     next()
   } else {
     res.status(401)
