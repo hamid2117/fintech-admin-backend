@@ -27,11 +27,16 @@ const protect = asyncHandler(async (req, res, next) => {
   }
 })
 const admin = asyncHandler(async (req, res, next) => {
-  if (req.user && req.user.type === 'admin' || req.user && req.user.type === 'operator' ) {
+  if (req.user) {
+    if ( req.user.type === 'admin' ||  req.user.type === 'operator' ) {
     next()
-  } else {
+    } else {
     res.status(401)
     throw new Error('Not authorized for admin')
+    }
+  } else {
+    res.status(404)
+    throw new Error('Not found')
   }
 })
 
